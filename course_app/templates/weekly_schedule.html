@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>برنامه هفتگی</h2>
+<table border="1">
+    <tr>
+        <th>کد درس</th>
+        <th>نام درس</th>
+        <th>روز کلاس</th>
+        <th>ساعت کلاس</th>
+        <th>روز امتحان</th>
+        <th>ساعت امتحان</th>
+    </tr>
+    {% for en in enrollments %}
+    <tr>
+        <td>{{ en.course.course_code }}</td>
+        <td>{{ en.course.course_name }}</td>
+        <td>{{ en.course.class_day }}</td>
+        <td>{{ en.course.class_time }}</td>
+        <td>{{ en.course.exam_day }}</td>
+        <td>{{ en.course.exam_time }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
