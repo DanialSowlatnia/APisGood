@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود به سامانه انتخاب واحد</title>
+</head>
+<body>
+    <h2>ورود به سامانه انتخاب واحد</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ورود</button>
+    </form>
+    <p>حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a></p>
+</body>
+</html>

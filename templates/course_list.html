@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>لیست دروس</h2>
+
+<form method="get">
+    <select name="dept" onchange="this.form.submit()">
+        <option value="">همه دانشکده‌ها</option>
+        {% for dept in departments %}
+        <option value="{{ dept.id }}" {% if selected_dept == dept.id|stringformat:"s" %}selected{% endif %}>{{ dept.name }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="text" name="q" placeholder="جستجو..." value="{{ search_query|default_if_none:'' }}">
+    <input type="submit" value="جستجو">
+</form>
+
+<p>
+    تعداد واحدهای اخذشده:
+    {{ enrolled_courses.count }} / محاسبهٔ دستی هم قابل انجام است
+</p>
+
+<table border="1">
+    <tr>
+        <th>کد درس</th>
+        <th>نام درس</th>
+        <th>دانشکده</th>
+        <th>ظرفیت/باقیمانده</th>
+        <th>استاد</th>
+        <th>زمان کلاس</th>
+        <th>زمان امتحان</th>
+        <th>عملیات</th>
+    </tr>
+
+    {% for c in courses %}
+    <tr {% if c.id in enrolled_courses %} style="background-color: #e0ffe0;" {% endif %}>
+        <td>{{ c.course_code }}</td>
+        <td>{{ c.course_name }}</td>
+        <td>{{ c.department.name }}</td>
+        <td>{{ c.capacity }} / {{ c.remaining_capacity }}</td>
+        <td>{% if c.instructor %}{{ c.instructor.first_name }} {{ c.instructor.last_name }}{% endif %}</td>
+        <td>{{ c.class_day }} - {{ c.class_time }}</td>
+        <td>{{ c.exam_day }} - {{ c.exam_time }}</td>
+        <td>
+            {% if c.id in enrolled_courses %}
+            <a href="{% url 'course_remove' c.id %}">حذف</a>
+            {% else %}
+            <a href="{% url 'course_add' c.id %}">اخذ</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>
+    <a href="{% url 'weekly_schedule' %}">مشاهده برنامه هفتگی</a>
+</p>
+
+{% endblock %}
