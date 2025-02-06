@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="max-width: 400px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); text-align: right;">
+    <h2 style="text-align: center; color: #333;">ورود به سامانه انتخاب واحد</h2>
+
+    <form method="post" style="display: flex; flex-direction: column;">
+        {% csrf_token %}
+        
+        <label for="username">نام کاربری:</label>
+        <input type="text" name="username" id="username" required style="padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+        
+        <label for="password">گذرواژه:</label>
+        <input type="password" name="password" id="password" required style="padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+        
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+            ورود
+        </button>
+    </form>
+
+    <p style="text-align: center; margin-top: 10px;">
+        حساب کاربری ندارید؟ <a href="{% url 'signup' %}" style="color: #007BFF;">ثبت‌نام کنید</a>
+    </p>
+</div>
+{% endblock %}

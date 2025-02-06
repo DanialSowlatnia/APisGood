@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>مدیریت دروس</h2>
+
+{% if edit_mode %}
+<h3>افزودن/ویرایش درس</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ذخیره</button>
+</form>
+{% else %}
+<p><a href="{% url 'add_course' %}">افزودن درس جدید</a></p>
+<table border="1">
+    <tr>
+        <th>کد درس</th>
+        <th>نام درس</th>
+        <th>ظرفیت</th>
+        <th>عملیات</th>
+    </tr>
+    {% for c in courses %}
+    <tr>
+        <td>{{ c.course_code }}</td>
+        <td>{{ c.course_name }}</td>
+        <td>{{ c.capacity }}</td>
+        <td>
+            <a href="{% url 'edit_course' c.id %}">ویرایش</a> |
+            <a href="{% url 'delete_course' c.id %}" onclick="return confirm('آیا مطمئنید؟')">حذف</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
